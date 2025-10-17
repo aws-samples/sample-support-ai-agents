@@ -20,11 +20,7 @@ const OptiraChatBot = ({ currentAgent = 'orchestrator', user }) => {
   const agentNames = {
     'orchestrator': 'Orchestrator',
     'rag-agent': 'Support Case Knowledge-base (RAG) Agent',
-    'aggregator-agent': 'Support Case Query Aggregator Agent',
-    'remediation-agent': 'Remediation Agent',
-    'trusted-advisor-agent': 'Trusted Advisor Agent',
-    'cost-usage-agent': 'Cost & Usage Insights Agent',
-    'eol-agent': 'EOL (End of Life) Agent'
+    'aggregator-agent': 'Support Case Query Aggregator Agent'
   };
 
   // Exact queries provided by the user (removed the 3 specified queries)
@@ -57,7 +53,7 @@ const OptiraChatBot = ({ currentAgent = 'orchestrator', user }) => {
       {
         id: Date.now(),
         type: 'assistant',
-        content: `Hello! I'm the **${agentName}** from ES OPTIRA. I'm part of the Agentic AI system for OPTimizing Infrastructure via Remediation. I can help you analyze AWS support cases, identify infrastructure issues, and execute remediation actions. Ask me to analyze patterns, identify problems, and implement fixes!`,
+        content: `Hello! I'm the **${agentName}** from ES OPTIRA. I'm part of the Agentic AI system for support. I can help you analyze AWS support cases, identify. Ask me to analyze patterns, identify problems, and help plan fixes!`,
         timestamp: new Date()
       }
     ]);
@@ -86,7 +82,7 @@ const OptiraChatBot = ({ currentAgent = 'orchestrator', user }) => {
       const systemMessage = {
         id: Date.now(),
         type: 'error',
-        content: 'Warning: Unable to connect to the ES OPTIRA remediation system. Make sure the proxy server is running on port 3001.',
+        content: 'Warning: Unable to connect to the ES OPTIRA system. Make sure the proxy server is running on port 3001.',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, systemMessage]);
@@ -349,7 +345,7 @@ const OptiraChatBot = ({ currentAgent = 'orchestrator', user }) => {
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder={`Ask the ${currentAgentName} to analyze, remediate, or optimize your AWS infrastructure...`}
+            placeholder={`Ask the ${currentAgentName} to analyze optimize your AWS infrastructure...`}
             disabled={isLoading}
           />
           <button type="submit" disabled={isLoading || !inputValue.trim()}>
@@ -394,8 +390,7 @@ const OptiraChatBot = ({ currentAgent = 'orchestrator', user }) => {
             
             <div className="pro-tip">
               💡 <strong>{currentAgentName}:</strong> I'm part of the ES OPTIRA Agentic AI system. I can analyze support case patterns, 
-              identify infrastructure issues, execute configuration fixes, optimize resource settings, implement security improvements, 
-              and automate remediation workflows. Each agent in the system has specialized capabilities for comprehensive infrastructure optimization.
+              identify issues.
             </div>
           </div>
         )}

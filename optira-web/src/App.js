@@ -29,30 +29,6 @@ const ITEMS = [
         text: "Support Case Query Aggregator Agent",
         id: "aggregator-agent",
         href: "#/aggregator-agent",
-      },
-      {
-        type: "link",
-        text: "Remediation Agent",
-        id: "remediation-agent",
-        href: "#/remediation-agent",
-      },
-      {
-        type: "link",
-        text: "Trusted Advisor Agent",
-        id: "trusted-advisor-agent",
-        href: "#/trusted-advisor-agent",
-      },
-      {
-        type: "link",
-        text: "Cost & Usage Insights Agent",
-        id: "cost-usage-agent",
-        href: "#/cost-usage-agent",
-      },
-      {
-        type: "link",
-        text: "EOL (End of Life) Agent",
-        id: "eol-agent",
-        href: "#/eol-agent",
       }
     ]
   }
