@@ -14,7 +14,6 @@ The project is organized into the following components:
 - **es-optira-collector**: Data collection service for AWS support cases
 - **es-optira-data-pipeline**: Data processing and metadata extraction pipeline
 - **es-optira-kb**: Knowledge Base management using Amazon Bedrock
-- **es-optira-agentcore**: Core agent functionality and dependencies
 
 ## Prerequisites
 
@@ -49,7 +48,7 @@ The project is organized into the following components:
 
    After deployment, increase the API Gateway integration timeout from 29 seconds to 120 seconds:
 
-   1. Navigate to AWS Service Quotas console: https://us-east-1.console.aws.amazon.com/servicequotas/home/services/apigateway/quotas
+   1. Navigate to AWS Service Quotas console: 'https://{AWS_REGION}.console.aws.amazon.com/servicequotas/home/services/apigateway/quotas'
    2. Search for and select "Maximum integration timeout in milliseconds"
    3. Click "Request increase at account level"
    4. Change the quota value from 29,000 milliseconds to 120,000 milliseconds
@@ -80,15 +79,10 @@ aws apigateway get-api-key --api-key <API-KEY-ID> --include-value --region us-we
 
 # Example API call
 curl -X POST \
-  'https://your-api-gateway-url.execute-api.us-west-2.amazonaws.com/prod/prompt' \
+  'https://your-api-gateway-url.execute-api.{AWS_REGION}.amazonaws.com/prod/prompt' \
   -H 'x-api-key: YOUR_API_KEY_VALUE' \
   -H 'Content-Type: application/json' \
   -d '{"query": "how many support cases entered, give me a breakdown year by year?"}'
-```
-
-**Result:**
-```
-Perfect! Here's your year-by-year breakdown of support cases:
 ```
 
 **Note:** Replace the API Gateway URL with the value from your CDK deployment output (`ApiUrl`), and use the API key ID from the deployment output (`ProdApiKeyId`) to retrieve the actual API key value.
@@ -97,7 +91,7 @@ Perfect! Here's your year-by-year breakdown of support cases:
 
 ```bash
 cd es-optira-kb
-python3 test_kb.py --region us-west-2 --action query --kb-id YOUR_KB_ID --query-text "Your question"
+python3 test_kb.py --region {AWS_REGION} --action query --kb-id {YOUR_KB_ID} --query-text "Your question"
 ```
 
 ## Features
