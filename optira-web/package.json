@@ -1,0 +1,62 @@
+{
+  "name": "optira-web-chatbot",
+  "version": "1.0.0",
+  "description": "Optira Support Case Analysis Chatbot Web Interface",
+  "main": "server.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "node server.js",
+    "dev": "concurrently \"npm run server\" \"npm start\"",
+    "start:prod": "npm run build && npm run server"
+  },
+  "keywords": [
+    "optira",
+    "chatbot",
+    "support-cases",
+    "aws",
+    "bedrock"
+  ],
+  "author": "Optira Team",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-amplify/ui-react": "^6.12.0",
+    "@cloudscape-design/components": "^3.0.0",
+    "@cloudscape-design/global-styles": "^1.0.0",
+    "aws-amplify": "^6.15.5",
+    "aws-sdk": "^2.1692.0",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^10.1.0",
+    "react-scripts": "5.0.1",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^3.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:3001",
+  "overrides": {
+    "nth-check": ">=2.0.1"
+  }
+}

@@ -1,0 +1,495 @@
+.optira-chatbot {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.optira-chatbot .top {
+    display: block;
+    padding: 16px 20px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.optira-chatbot .top .title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #232f3e;
+    margin-bottom: 6px;
+}
+
+.optira-chatbot .top .subtitle {
+    font-size: 13px;
+    color: #666;
+}
+
+.optira-chatbot .chatarea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    overflow: hidden;
+    min-height: 0;
+}
+
+.optira-chatbot .messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 0;
+}
+
+.optira-chatbot .message {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    max-width: 85%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.optira-chatbot .message.user {
+    background: #0073bb;
+    color: white;
+    margin-left: auto;
+    text-align: left;
+}
+
+.optira-chatbot .message.assistant {
+    background: #f0f0f0;
+    color: #333;
+    margin-right: auto;
+    white-space: normal;
+}
+
+.optira-chatbot .message.error {
+    background: #ff6b6b;
+    color: white;
+    margin-right: auto;
+}
+
+.optira-chatbot .message.loading {
+    background: #e8f4fd;
+    color: #0073bb;
+    margin-right: auto;
+    font-style: italic;
+    border-left: 4px solid #0073bb;
+}
+
+/* Markdown content wrapper */
+.markdown-content {
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Markdown Headers */
+.markdown-h1 {
+    font-size: 20px !important;
+    font-weight: bold !important;
+    margin: 16px 0 12px 0 !important;
+    color: #232f3e !important;
+    border-bottom: 2px solid #0073bb !important;
+    padding-bottom: 6px !important;
+}
+
+.markdown-h2 {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    margin: 14px 0 10px 0 !important;
+    color: #232f3e !important;
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 4px !important;
+}
+
+.markdown-h3 {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin: 12px 0 8px 0 !important;
+    color: #0073bb !important;
+}
+
+.markdown-h4 {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    margin: 10px 0 6px 0 !important;
+    color: #333 !important;
+}
+
+/* Markdown Paragraphs */
+.markdown-p {
+    margin: 0 0 12px 0 !important;
+    line-height: 1.5 !important;
+}
+
+/* Markdown Lists */
+.markdown-ul {
+    margin: 8px 0 12px 0 !important;
+    padding-left: 24px !important;
+    list-style-type: disc !important;
+}
+
+.markdown-ol {
+    margin: 8px 0 12px 0 !important;
+    padding-left: 24px !important;
+    list-style-type: decimal !important;
+}
+
+.markdown-li {
+    margin: 6px 0 !important;
+    line-height: 1.4 !important;
+    padding-left: 4px !important;
+}
+
+/* Nested lists */
+.markdown-ul .markdown-ul {
+    margin: 4px 0 4px 0 !important;
+    padding-left: 20px !important;
+    list-style-type: circle !important;
+}
+
+.markdown-ul .markdown-ul .markdown-ul {
+    list-style-type: square !important;
+}
+
+.markdown-ol .markdown-ol {
+    margin: 4px 0 4px 0 !important;
+    padding-left: 20px !important;
+    list-style-type: lower-alpha !important;
+}
+
+.markdown-ol .markdown-ol .markdown-ol {
+    list-style-type: lower-roman !important;
+}
+
+/* Markdown Text Formatting */
+.markdown-strong {
+    font-weight: 600 !important;
+    color: #232f3e !important;
+}
+
+.markdown-em {
+    font-style: italic !important;
+    color: #555 !important;
+}
+
+/* Markdown Code */
+.markdown-code-inline {
+    background-color: #f1f3f4 !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    font-size: 13px !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+.markdown-pre {
+    background-color: #f8f9fa !important;
+    padding: 12px !important;
+    border-radius: 6px !important;
+    overflow-x: auto !important;
+    margin: 12px 0 !important;
+    border-left: 4px solid #0073bb !important;
+}
+
+.markdown-code-block {
+    background: none !important;
+    padding: 0 !important;
+    font-size: 13px !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+/* Markdown Tables */
+.markdown-table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    margin: 12px 0 !important;
+    font-size: 13px !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
+.markdown-th {
+    border: 1px solid #ddd !important;
+    padding: 10px 12px !important;
+    background-color: #f8f9fa !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    color: #232f3e !important;
+}
+
+.markdown-td {
+    border: 1px solid #ddd !important;
+    padding: 8px 12px !important;
+    vertical-align: top !important;
+}
+
+.markdown-table tr:nth-child(even) {
+    background-color: #f9f9f9 !important;
+}
+
+/* Markdown Blockquotes */
+.markdown-blockquote {
+    border-left: 4px solid #0073bb !important;
+    margin: 12px 0 !important;
+    padding: 8px 16px !important;
+    background-color: #f8f9fa !important;
+    font-style: italic !important;
+    color: #555 !important;
+}
+
+/* Markdown Horizontal Rules */
+.markdown-hr {
+    border: none !important;
+    border-top: 2px solid #e0e0e0 !important;
+    margin: 20px 0 !important;
+}
+
+/* Fix for nested content spacing */
+.markdown-li .markdown-p {
+    margin: 0 0 4px 0 !important;
+}
+
+.markdown-li:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Special styling for key insights and patterns */
+.markdown-li .markdown-strong:first-child {
+    color: #0073bb !important;
+}
+
+/* Override any conflicting styles */
+.message.assistant * {
+    box-sizing: border-box;
+}
+
+.message.assistant ul,
+.message.assistant ol {
+    display: block !important;
+}
+
+.message.assistant li {
+    display: list-item !important;
+}
+
+.optira-chatbot .input-area {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.optira-chatbot .input-area input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.optira-chatbot .input-area input:focus {
+    border-color: #0073bb;
+    box-shadow: 0 0 0 2px rgba(0, 115, 187, 0.2);
+}
+
+.optira-chatbot .input-area button {
+    padding: 10px 20px;
+    background: #0073bb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.optira-chatbot .input-area button:hover:not(:disabled) {
+    background: #005a94;
+}
+
+.optira-chatbot .input-area button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.optira-chatbot .examples {
+    margin-top: 12px;
+    padding: 16px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.optira-chatbot .examples .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+    text-align: center;
+    border-bottom: 2px solid #0073bb;
+    padding-bottom: 6px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+}
+
+.optira-chatbot .examples .category-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    margin-top: 12px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 4px;
+    position: sticky;
+    top: 40px;
+    background: white;
+    z-index: 1;
+}
+
+.optira-chatbot .examples .example {
+    display: inline-block;
+    margin: 4px 6px 4px 0;
+    padding: 6px 10px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #495057;
+    transition: all 0.2s;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 280px;
+    vertical-align: top;
+}
+
+.optira-chatbot .examples .example:hover {
+    background: #e9ecef;
+    border-color: #0073bb;
+    color: #0073bb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,115,187,0.2);
+}
+
+.optira-chatbot .examples .advanced-example {
+    display: block;
+    margin: 6px 0;
+    padding: 10px 12px;
+    background: #f8fff9;
+    border: 1px solid #28a745;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #333;
+    transition: all 0.2s;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.optira-chatbot .examples .advanced-example:hover {
+    background: #e8f5e8;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(40,167,69,0.2);
+}
+
+.optira-chatbot .examples .advanced-example .query-preview {
+    font-size: 10px;
+    color: #666;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.optira-chatbot .pro-tip {
+    margin-top: 12px;
+    padding: 10px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 6px;
+    font-size: 11px;
+    color: #666;
+    border-left: 4px solid #0073bb;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4;
+}
+
+/* Scrollbar styling */
+.optira-chatbot .messages::-webkit-scrollbar,
+.optira-chatbot .examples::-webkit-scrollbar {
+    width: 8px;
+}
+
+.optira-chatbot .messages::-webkit-scrollbar-track,
+.optira-chatbot .examples::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.optira-chatbot .messages::-webkit-scrollbar-thumb,
+.optira-chatbot .examples::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.optira-chatbot .messages::-webkit-scrollbar-thumb:hover,
+.optira-chatbot .examples::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Firefox scrollbar */
+.optira-chatbot .messages,
+.optira-chatbot .examples {
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .optira-chatbot .top {
+        padding: 12px 16px;
+    }
+    
+    .optira-chatbot .top .title {
+        font-size: 18px;
+    }
+    
+    .optira-chatbot .chatarea {
+        padding: 12px;
+    }
+    
+    .optira-chatbot .examples {
+        max-height: 150px;
+    }
+    
+    .optira-chatbot .examples .example {
+        font-size: 10px;
+        padding: 5px 8px;
+        max-width: 200px;
+    }
+    
+    .optira-chatbot .message {
+        max-width: 90%;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,17 @@
+# Virtual environments
+.venv/
+
+# Node modules
+node_modules/
+
+# Packaging
+packaging/
+
+# Repl state
+repl_state/
+
+# CDK output
+cdk.out/
+
+# macOS
+.DS_Store
