@@ -48,7 +48,7 @@ The Data Collection Account refers to the central account that contains the supp
 
 This section outlines the key components of the Optira solution. 
 
-### Optira Core
+### A. Optira Core
 
 The solution has Optira Core that is deployed in a central Data Collection account. This contains core agents that can be deployed via CDK. It contains:
  - AI Agents powered by Amazon Bedrock and Strands SDK - running in central (Data Collection) account
@@ -58,13 +58,13 @@ The solution has Optira Core that is deployed in a central Data Collection accou
 
 The deployment process is detailed in the [Optira Core Deployment](./optira-core/README.md) guide, located in the `optira-core` subdirectory. This guide covers the steps to set up the required AWS resources.
 
-### AWS Support Collector Module - Data Pipeline
+### B. AWS Support Collector Module - Data Pipeline
 
 The solution includes a data collection module to retrieve the necessary AWS support data.
 
 The [Optira AWS Support Collection - Data Pipeline](./support_collector/README.md) guide, located in the `support_collector` subdirectory, outlines the steps to deploy the AWS Lambda functions and EventBridge resources required to collect and upload AWS Support Cases to an Amazon S3 bucket. This collected data can then be leveraged by Optira AI Agents to provide insights and remediations.
 
-### Optira Web
+### C. Optira Web
 
 Node.js React Web interface secured via Cognito. The architecture and deployment process is detailed in the [Optira Web Deployment](./optira-web/README.md) guide, located in the `optira-web` subdirectory. 
 
