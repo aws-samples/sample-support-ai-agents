@@ -1,4 +1,4 @@
-This solution optimizes AWS infrastructure and improves operational efficiencies through Agentic AI by delivering automated analysis. Built using the open-source Strands SDK from AWS, this solution provides complete flexibility and control over your AI implementation - you can use any LLM you prefer, whether it's Bedrock models, any model providers, or even local models like Ollama.
+This solution optimizes operational efficiencies through Agentic AI by delivering automated support case analysis. Built using the open-source Strands SDK from AWS, this solution provides complete flexibility and control over your AI implementation - you can use any LLM you prefer, whether it's Bedrock models, any model providers, or even local models like Ollama. You can extend this solution for your organization's needs.
 
 The solution provides access through APIs or a web interface, featuring specialized agents that deliver distinct capabilities. The architecture is completely serverless, running on Bedrock and Lambda for automatic scaling without infrastructure management. Most importantly, this is a 100% API-driven solution that can easily integrate with any platform you're already using, whether that's Slack or your own internal tools.
 
@@ -6,15 +6,15 @@ The Support Case Agent capability processes both structured and unstructured dat
 
 ## Solution Architecture
 
-The following diagram illustrates an organizational structure with multiple AWS accounts, where support cases from linked accounts are pulled into the organization's main account.
+The following diagram illustrates an organizational structure with multiple AWS accounts, where support cases from linked accounts are pulled into the organization's main account. 
 
 ![ALT](img/OrgDeploymentArchitecture.png)
 
-The following diagram illustrates a multi-account structure with flexible AI agent orchestration.
+The following diagram illustrates a multi-account structure with flexible AI agent orchestration. 
 
 ![ALT](img/optira-arch.png)
 
-The solution demonstrates how to build flexible, customizable AI applications using the open-source Strands SDK from AWS. The architecture showcases modularity - you can add new agents or enhance existing ones without disrupting the overall flow. The implementation follows the [Agents as Tools](https://strandsagents.com/latest/documentation/docs/user-guide/concepts/multi-agent/agents-as-tools/) architecture pattern from Strands.
+The architecture showcases modularity - you can add new agents or enhance existing ones without disrupting the overall flow. The implementation follows the [Agents as Tools](https://strandsagents.com/latest/documentation/docs/user-guide/concepts/multi-agent/agents-as-tools/) architecture pattern from Strands.
 
 **Key Architectural Components:**
 
@@ -32,7 +32,7 @@ The solution demonstrates how to build flexible, customizable AI applications us
 
 **Data Flow and Processing:**
 - Natural language queries are translated into precise Athena SQL via Bedrock LLM
-- Support case metadata and Trusted Advisor data collected through AWS Support API
+- Support case metadata collected through AWS Support API
 - Data stored in S3 and made queryable through Athena for unified multi-account view
 - Orchestrator synthesizes responses from all agents into comprehensive answers
 
@@ -74,7 +74,7 @@ The code provided in this solution should be thoroughly tested and validated bef
 
 ## Support
 
-For technical questions and implementation guidance, please reach out to your AWS Technical Account Managers (TAMs) who can provide specialized assistance with this solution.
+For technical questions and implementation guidance, please contact your AWS Technical Account Managers (TAMs) for specialized assistance with this solution. Support will be provided on a best-effort basis.
 
 ## License
 

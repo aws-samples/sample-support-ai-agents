@@ -43,6 +43,10 @@ The project is organized into the following components:
    - **Option 2**: Use existing bucket - Choose this if you have an existing S3 bucket you want to use
 
    The deployment script will ask you to choose between these options after you enter the bucket name.
+   
+   **AWS WAF Protection Options:**
+   - **Option 1 (Default)**: Disable WAF (default - no additional cost)
+   - **Option 2**: Enable WAF (provides DDoS protection - additional AWS charges apply)
 
 4. **Increase API Gateway Integration Timeout**
 
