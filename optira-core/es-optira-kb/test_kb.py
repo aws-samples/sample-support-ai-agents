@@ -107,8 +107,8 @@ def query_knowledge_base(kb_id, query_text, region, num_results=5):
         logger.error(f"Error querying knowledge base: {e}")
         return None
 
-def upload_pdf(file_path, bucket_name, prefix, region):
-    """Upload a PDF file to existing S3 bucket"""
+def upload_supportcase_file(file_path, bucket_name, prefix, region):
+    """Upload a support case file to existing S3 bucket"""
     s3 = boto3.client('s3', region_name=region)
     
     try:
@@ -147,7 +147,7 @@ def main():
                         help='Action to perform')
     parser.add_argument('--kb-id', type=str, help='Knowledge Base ID')
     parser.add_argument('--query-text', type=str, default='What information do you have?', help='Query text')
-    parser.add_argument('--file', type=str, help='Path to PDF file to upload')
+    parser.add_argument('--file', type=str, help='Path to support case file to upload')
     parser.add_argument('--bucket', type=str, help='Existing S3 bucket name')
     parser.add_argument('--prefix', type=str, default='support-cases', help='S3 prefix')
     
@@ -178,7 +178,7 @@ def main():
         if not args.file or not args.bucket:
             logger.error("File path and bucket name are required for upload action")
             return
-        upload_pdf(args.file, args.bucket, args.prefix, args.region)
+        upload_supportcase_file(args.file, args.bucket, args.prefix, args.region)
 
 if __name__ == "__main__":
     main()

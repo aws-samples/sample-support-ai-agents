@@ -274,7 +274,7 @@ class OptiraKnowledgeBase:
         
         kb_response = self.bedrock_agent.create_knowledge_base(
             name=kb_name,
-            description="Knowledge base for PDF files",
+            description="Knowledge base for support case files",
             roleArn=role_arn,
             knowledgeBaseConfiguration={
                 'type': 'VECTOR',
@@ -325,7 +325,7 @@ class OptiraKnowledgeBase:
         data_source_response = self.bedrock_agent.create_data_source(
             knowledgeBaseId=kb_id,
             name=f"s3-data-source-{uuid.uuid4().hex[:8]}",
-            description="S3 data source for PDF files",
+            description="S3 data source for support files",
             dataSourceConfiguration={
                 'type': 'S3',
                 's3Configuration': {

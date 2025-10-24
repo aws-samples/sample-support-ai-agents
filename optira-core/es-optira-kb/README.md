@@ -1,6 +1,6 @@
 # Amazon Bedrock Knowledge Base Solution
 
-A minimal solution for creating and testing Amazon Bedrock Knowledge Bases with S3 PDF files.
+A minimal solution for creating and testing Amazon Bedrock Knowledge Bases with S3 support case files.
 
 ## Files
 
@@ -100,7 +100,7 @@ python test_kb.py --region us-west-2 --action query --kb-id T5LLHYCYRR --query-t
 This solution uses the following AWS services:
 
 - **Amazon Bedrock**: For knowledge base creation and querying
-- **Amazon S3**: For storing PDF files (existing bucket)
+- **Amazon S3**: For storing support files (existing bucket)
 - **Amazon OpenSearch Serverless**: For vector storage and search
 - **AWS IAM**: For permissions management
 
