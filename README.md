@@ -42,7 +42,7 @@ The architecture showcases modularity - you can add new agents or enhance existi
 - Serverless architecture on Bedrock and Lambda for automatic scaling
 - Modular design allows adding new capabilities without architectural changes
 
-The Data Collection Account refers to the central account that contains the support data in an S3 bucket after downloading from all accounts in scope. The Linked accounts refer to any accounts other than the Data Collection Account that have AWS support data - AWS support cases, Trusted Advisor, or Health.
+The Data Collection Account refers to the central account that contains the support data in an S3 bucket after downloading from all accounts in scope. The Linked accounts refer to any accounts other than the Data Collection Account that have AWS support data - AWS support cases.
 
 ## Optira Components
 

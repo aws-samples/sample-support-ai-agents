@@ -1,6 +1,6 @@
-# Q Support Insights (QSI) - AWS Support Collection Deployment
+# Support Insights - AWS Support Collection Deployment
 
-This repository contains scripts and resources to automate the deployment of AWS Lambda functions in designated member accounts. The deployed resources collect and upload AWS Support data (AWS Support Cases, AWS Health Events, and Trusted Advisor Checks) to an existing Amazon S3 bucket in the Data Collection Central account. The collected data can be utilized with Amazon Q to analyze and gain insights into your support cases, service health events, and Trusted Advisor recommendations.
+This repository contains scripts and resources to automate the deployment of AWS Lambda functions in designated member accounts. The deployed resources collect and upload AWS Support cases data to an existing Amazon S3 bucket in the Data Collection Central account. The collected data can be utilized with Amazon Q to analyze and gain insights into your support cases.
 
 ## Prerequisites
 
@@ -39,14 +39,10 @@ However, it is recommended to update these settings based on the volume of data 
 │   └── member_account_resources.yaml
 ├── member_account_resources.yaml
 └── support-collector-lambda
-    ├── health_client.py
     ├── lambda_function.py
     ├── region_lookup.py
-    ├── ta_checks_info.json
     ├── upload_cases.py
-    ├── upload_health.py
-    └── upload_ta.py
-```
+    
 
 ## Deployment Options
 
@@ -155,7 +151,7 @@ Use this option if you do not wish to use AWS Organizations and want to target a
 
 5. The script will prompt you to provide the input bucket name to store the support data. It is preferred to store all the data in the same account though you can select a bucket in another account and update its policy (see next section).
 6. The script will perform the following tasks:
-   - Create an IAM role `SupportInsightsLambdaRole-9c8794ee-f9e8` with the necessary permissions to access the AWS Support and Health services.
+   - Create an IAM role `SupportInsightsLambdaRole*` with the necessary permissions to access the AWS Support services.
    - Deploy the Lambda function with the created IAM role, using a CloudFormation stack.
    - Set up an Amazon EventBridge scheduler to periodically trigger the AWS Lambda function.
    - Set up an Amazon EventBridge scheduler to run a one time sync to fetch historical support data and load to S3 data bucket.
@@ -190,9 +186,9 @@ Replace `<member_account_id>` with the actual AWS account ID of the member accou
 
 After the successful deployment, an Amazon EventBridge scheduler will periodically trigger the AWS Lambda function. The Lambda function will collect and store the support data in the specified S3 bucket.
 
-- The initial execution of the Lambda function will collect and store up to 180 days of historical data (support cases, health events, and Trusted Advisor checks). However, you can modify the number of days by updating the `ScheduleExpression` in the `EventBridgeRuleForHistoricalSupportData` resource in the `member_account_resources.yaml` CloudFormation template.
+- The initial execution of the Lambda function will collect and store up to 180 days of historical data (support cases). However, you can modify the number of days by updating the `ScheduleExpression` in the `EventBridgeRuleForHistoricalSupportData` resource in the `member_account_resources.yaml` CloudFormation template.
 - Subsequent executions will collect and store data for the previous day.
-- You have the flexibility to configure the Lambda function to collect one, two, or all three of the support cases, health events, and Trusted Advisor checks by modifying the input parameters in the `EventBridgeRuleForHistoricalSupportData` and `EventBridgeRuleForDailyRun` resources. You can also create separate EventBridge rules for each type of data (cases, health, and Trusted Advisor) if desired.
+- You have the flexibility to configure the Lambda function to collect the support cases, by modifying the input parameters in the `EventBridgeRuleForHistoricalSupportData` and `EventBridgeRuleForDailyRun` resources. You can also create separate EventBridge rules for each type of data (cases) if desired.
 
 The user does not need to manually trigger the Lambda function, as the data collection process is automated and managed by the deployed resources.
 
@@ -202,21 +198,17 @@ You can test the Lambda function by invoking it with a custom payload. The paylo
 
 - `past_no_of_days` (integer): The number of past days for which you want to retrieve support data.
 - `case` (boolean): Whether to include case data or not.
-- `health` (boolean): Whether to include health data or not.
-- `ta` (boolean): Whether to include Trusted Advisor data or not.
 
 Example payload:
 
 ```json
 {
   "past_no_of_days": 2,
-  "case": true,
-  "health": true,
-  "ta": true
+  "case": true
 }
 ```
 
-In this example, the Lambda function will retrieve support data for the past 180 days, including case data, health data, and Trusted Advisor data. The data will be stored in the `<DATA-COLLECTION-BUCKET>` S3 bucket.
+In this example, the Lambda function will retrieve support data for the past 180 days, including case data. The data will be stored in the `<DATA-COLLECTION-BUCKET>` S3 bucket.
 
 To test the Lambda function:
 
