@@ -267,37 +267,61 @@ class OptiraKnowledgeBase:
         except Exception as e:
             logger.warning(f"Failed to update network policy (non-critical): {str(e)}")
 
-    def create_knowledge_base(self, role_arn, collection_arn, kb_name=None):
-        """Create Bedrock Knowledge Base"""
-        if not kb_name:
-            kb_name = f"pdf-kb-{uuid.uuid4().hex[:8]}"
+    def create_knowledge_base(self, role_arn, collection_arn):
+        """Create or get existing Bedrock Knowledge Base"""
+        kb_name = f"optira-support-case-kb"
         
-        kb_response = self.bedrock_agent.create_knowledge_base(
-            name=kb_name,
-            description="Knowledge base for support case files",
-            roleArn=role_arn,
-            knowledgeBaseConfiguration={
-                'type': 'VECTOR',
-                'vectorKnowledgeBaseConfiguration': {
-                    'embeddingModelArn': f'arn:aws:bedrock:{self.region_name}::foundation-model/{EMBEDDING_MODEL_ID}'
-                }
-            },
-            storageConfiguration={
-                'type': 'OPENSEARCH_SERVERLESS',
-                'opensearchServerlessConfiguration': {
-                    'collectionArn': collection_arn,
-                    'vectorIndexName': 'bedrock-kb-index',
-                    'fieldMapping': {
-                        'vectorField': 'embedding',
-                        'textField': 'text',
-                        'metadataField': 'metadata'
+        # Check if knowledge base already exists
+        try:
+            kb_list = self.bedrock_agent.list_knowledge_bases()
+            for kb in kb_list['knowledgeBaseSummaries']:
+                if kb['name'] == kb_name:
+                    kb_id = kb['knowledgeBaseId']
+                    logger.info(f"Found existing Knowledge Base: {kb_name} with ID: {kb_id}")
+                    return kb_id
+        except Exception as e:
+            logger.warning(f"Error checking existing knowledge bases: {str(e)}")
+        
+        # Create new knowledge base if not found
+        try:
+            kb_response = self.bedrock_agent.create_knowledge_base(
+                name=kb_name,
+                description="Knowledge base for support case files",
+                roleArn=role_arn,
+                knowledgeBaseConfiguration={
+                    'type': 'VECTOR',
+                    'vectorKnowledgeBaseConfiguration': {
+                        'embeddingModelArn': f'arn:aws:bedrock:{self.region_name}::foundation-model/{EMBEDDING_MODEL_ID}'
+                    }
+                },
+                storageConfiguration={
+                    'type': 'OPENSEARCH_SERVERLESS',
+                    'opensearchServerlessConfiguration': {
+                        'collectionArn': collection_arn,
+                        'vectorIndexName': 'bedrock-kb-index',
+                        'fieldMapping': {
+                            'vectorField': 'embedding',
+                            'textField': 'text',
+                            'metadataField': 'metadata'
+                        }
                     }
                 }
-            }
-        )
-        
-        kb_id = kb_response['knowledgeBase']['knowledgeBaseId']
-        logger.info(f"Created Knowledge Base with ID: {kb_id}")
+            )
+            
+            kb_id = kb_response['knowledgeBase']['knowledgeBaseId']
+            logger.info(f"Created new Knowledge Base with ID: {kb_id}")
+        except ClientError as e:
+            if 'already exists' in str(e):
+                # Fallback: try to find by name again
+                kb_list = self.bedrock_agent.list_knowledge_bases()
+                for kb in kb_list['knowledgeBaseSummaries']:
+                    if kb['name'] == kb_name:
+                        kb_id = kb['knowledgeBaseId']
+                        logger.info(f"Using existing Knowledge Base: {kb_name} with ID: {kb_id}")
+                        return kb_id
+                raise Exception(f"Knowledge Base {kb_name} exists but cannot be found")
+            else:
+                raise
         
         # Wait for knowledge base to become active
         logger.info("Waiting for Knowledge Base to become active...")
@@ -315,17 +339,29 @@ class OptiraKnowledgeBase:
         return kb_id
 
     def create_data_source(self, kb_id, s3_bucket_name=None, s3_prefix=None):
-        """Create data source for the knowledge base"""
+        """Create or get existing data source for the knowledge base"""
         if not s3_bucket_name:
             s3_bucket_name = self.s3_bucket_name
         
         if not s3_prefix:
             s3_prefix = self.s3_prefix
+        
+        # Check if data source already exists
+        try:
+            data_sources = self.bedrock_agent.list_data_sources(knowledgeBaseId=kb_id)
+            for ds in data_sources['dataSourceSummaries']:
+                if s3_bucket_name in ds.get('description', '') or 'support' in ds.get('name', '').lower():
+                    data_source_id = ds['dataSourceId']
+                    logger.info(f"Found existing data source with ID: {data_source_id}")
+                    return data_source_id
+        except Exception as e:
+            logger.warning(f"Error checking existing data sources: {str(e)}")
             
         data_source_response = self.bedrock_agent.create_data_source(
             knowledgeBaseId=kb_id,
             name=f"s3-data-source-{uuid.uuid4().hex[:8]}",
             description="S3 data source for support files",
+            dataDeletionPolicy='RETAIN',
             dataSourceConfiguration={
                 'type': 'S3',
                 's3Configuration': {
@@ -421,7 +457,7 @@ class OptiraKnowledgeBase:
         logger.info(f"Knowledge Base ID {kb_id} stored in Secrets Manager as {secret_name}")
         return secret_name
 
-    def setup_complete_kb(self, kb_name=None, secret_name="optira/knowledge-base-id"):
+    def setup_complete_kb(self, secret_name="optira/knowledge-base-id"):
         """Set up a complete knowledge base with all components"""
         # 1. Create OpenSearch collection
         logger.info("Creating OpenSearch collection...")
@@ -429,7 +465,7 @@ class OptiraKnowledgeBase:
         
         # 2. Create knowledge base
         logger.info("Creating knowledge base...")
-        kb_id = self.create_knowledge_base(self.kb_role_arn, opensearch_config['collection_arn'], kb_name)
+        kb_id = self.create_knowledge_base(self.kb_role_arn, opensearch_config['collection_arn'])
         
         # 3. Create data source
         logger.info("Creating data source...")

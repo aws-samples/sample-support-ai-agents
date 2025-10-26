@@ -151,7 +151,7 @@ export class OptiraCollectorStack extends Stack {
 
     // EventBridge Scheduler for daily runs
     new scheduler.CfnSchedule(this, 'OptiraCollectorDailySchedule', {
-      scheduleExpression: 'cron(0 7 ? * * *)',
+      scheduleExpression: 'cron(0 6 ? * * *)',
       flexibleTimeWindow: {
         mode: 'OFF'
       },

@@ -149,7 +149,7 @@ done
 
 # 5. Delete Bedrock Knowledge Bases
 echo "Cleaning up Bedrock Knowledge Bases..."
-for kb in $(aws bedrock-agent list-knowledge-bases --query 'knowledgeBaseSummaries[?contains(name, `pdf-kb-`) || contains(name, `optira`) || contains(name, `Optira`)].knowledgeBaseId' --output text --region $REGION 2>/dev/null); do
+for kb in $(aws bedrock-agent list-knowledge-bases --query 'knowledgeBaseSummaries[?contains(name, `optira-support-case-kb`) || contains(name, `optira`) || contains(name, `Optira`)].knowledgeBaseId' --output text --region $REGION 2>/dev/null); do
     echo "Deleting Knowledge Base: $kb"
     aws bedrock-agent delete-knowledge-base --knowledge-base-id $kb --region $REGION 2>/dev/null || true
 done

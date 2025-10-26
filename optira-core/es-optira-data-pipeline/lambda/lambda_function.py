@@ -8,6 +8,45 @@ from botocore.exceptions import ClientError
 
 S3_PREFIX = 'support-cases/'
 
+def trigger_kb_ingestion():
+    """Trigger knowledge base ingestion for new support case data"""
+    try:
+        # Get KB ID from Secrets Manager
+        secrets_client = boto3.client('secretsmanager')
+        bedrock_agent = boto3.client('bedrock-agent')
+        
+        secret_response = secrets_client.get_secret_value(SecretId='optira/knowledge-base-id')
+        secret_data = json.loads(secret_response['SecretString'])
+        kb_id = secret_data['knowledge_base_id']
+        
+        # Get data sources for the knowledge base
+        data_sources = bedrock_agent.list_data_sources(knowledgeBaseId=kb_id)
+        
+        if not data_sources['dataSourceSummaries']:
+            return {'status': 'error', 'message': 'No data sources found'}
+        
+        # Start ingestion job for the first data source
+        data_source_id = data_sources['dataSourceSummaries'][0]['dataSourceId']
+        
+        ingestion_response = bedrock_agent.start_ingestion_job(
+            knowledgeBaseId=kb_id,
+            dataSourceId=data_source_id
+        )
+        
+        job_id = ingestion_response['ingestionJob']['ingestionJobId']
+        print(f"Started KB ingestion job: {job_id}")
+        
+        return {
+            'status': 'success', 
+            'job_id': job_id,
+            'kb_id': kb_id,
+            'data_source_id': data_source_id
+        }
+        
+    except Exception as e:
+        print(f"KB ingestion trigger failed: {str(e)}")
+        return {'status': 'error', 'message': str(e)}
+
 def process_batch(s3, bucket_name, resolved_records, active_records, files):
     """Process batches of records into separate files for resolved and active cases"""
     timestamp = datetime.now().strftime('%Y%m%d')
@@ -151,6 +190,9 @@ def lambda_handler(event, context):
                 'body': f'No files found to process in prefix {S3_PREFIX}'
             }
         
+        # Trigger knowledge base ingestion after processing files
+        kb_result = trigger_kb_ingestion()
+        
         return {
             'statusCode': 200,
             'body': {
@@ -159,7 +201,8 @@ def lambda_handler(event, context):
                 'active_cases_file': output_files['active'],
                 'files_processed': files_processed,
                 'resolved_count': len(resolved_records),
-                'active_count': len(active_records)
+                'active_count': len(active_records),
+                'kb_ingestion': kb_result
             }
         }
         

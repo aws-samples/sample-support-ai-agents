@@ -72,6 +72,32 @@ export class OptiraMetadataStack extends Stack {
                 resources: [`arn:aws:s3:::${supportDataBucketName.valueAsString}/*`]
               })
             ]
+          }),
+          BedrockKnowledgeBasePolicy: new iam.PolicyDocument({
+            statements: [
+              new iam.PolicyStatement({
+                effect: iam.Effect.ALLOW,
+                actions: [
+                    "bedrock:ListDataSources",
+                    "bedrock:StartIngestionJob",
+                    "bedrock:GetDataSource",
+                    "bedrock:GetKnowledgeBase"
+                ],
+                "resources": [
+                  "arn:aws:bedrock:*:*:knowledge-base/*",
+                  "arn:aws:bedrock:*:*:data-source/*"
+                ]
+              })
+            ]
+          }),
+          SecretsManagerPolicy: new iam.PolicyDocument({
+            statements: [
+              new iam.PolicyStatement({
+                effect: iam.Effect.ALLOW,
+                actions: ['secretsmanager:GetSecretValue'],
+                resources: [`arn:aws:secretsmanager:${this.region}:${this.account}:secret:optira/*`]
+              })
+            ]
           })
         }
       })

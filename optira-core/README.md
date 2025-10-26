@@ -50,12 +50,12 @@ The project is organized into the following components:
 
 4. **Increase API Gateway Integration Timeout**
 
-   After deployment, increase the API Gateway integration timeout from 29 seconds to 120 seconds:
+   After deployment, increase the API Gateway integration timeout from 29 seconds to 180 seconds and redeploy API Gateway from the AWS console:
 
    1. Navigate to AWS Service Quotas console: 'https://{AWS_REGION}.console.aws.amazon.com/servicequotas/home/services/apigateway/quotas'
    2. Search for and select "Maximum integration timeout in milliseconds"
    3. Click "Request increase at account level"
-   4. Change the quota value from 29,000 milliseconds to 120,000 milliseconds
+   4. Change the quota value from 29,000 milliseconds to 180,000 milliseconds
    5. Provide a justification (e.g., "Required for AI agent processing of complex analytical queries")
    6. Submit the request
 
