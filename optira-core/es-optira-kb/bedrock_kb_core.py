@@ -140,6 +140,10 @@ class OptiraKnowledgeBase:
         )
         logger.info(f"Created data access policy for collection: {collection_name}")
         
+        # 4. Wait for policies to propagate
+        logger.info("Waiting for access policies to propagate...")
+        time.sleep(60)
+        
         # 5. Create and wait for collection
         collection_response = self.opensearch.create_collection(
             name=collection_name,
@@ -165,8 +169,8 @@ class OptiraKnowledgeBase:
         
         # 6. Create vector index
         endpoint = f"https://{collection_id}.{self.region_name}.aoss.amazonaws.com"
-        logger.info("Waiting additional time for collection to be fully ready...")
-        time.sleep(30)
+        logger.info("Waiting for collection and policies to be fully ready...")
+        time.sleep(60)
         
         credentials = boto3.Session().get_credentials()
         awsauth = AWS4Auth(

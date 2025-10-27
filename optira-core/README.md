@@ -61,6 +61,11 @@ The project is organized into the following components:
 
    The quota increase is typically approved within a few minutes to 1 business day.
 
+5. **Support Collector and Metadata Scheduler**
+   We set the Support case collector scheduler to run every day at 06:00 (UTC) and the metadata refresh at 07:00 (UTC). Since this is for insights, it makes more sense to run it on a schedule rather than on-demand. If you would like to change this timing or run it more frequently, please modify the EventBridge scheduler.
+   1. Support Case Collector - OptiraCollectorStack-OptiraCollectorDailySchedule-*
+   2. Metadata Refresh - OptiraMetadataStack-OptiraMetadataDailySchedule-*
+
 ## Usage
 
 ### Query the Agent

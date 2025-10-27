@@ -8,6 +8,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as scheduler from 'aws-cdk-lib/aws-scheduler';
+import * as s3n from 'aws-cdk-lib/aws-s3-notifications';
 
 export class OptiraMetadataStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -181,5 +182,14 @@ export class OptiraMetadataStack extends Stack {
     });
 
     s3ObjectCreatedRule.addTarget(new targets.LambdaFunction(OptiraMetadataFunction));
+
+    // Add direct S3 event notification for immediate processing
+    const supportDataBucket = s3.Bucket.fromBucketName(this, 'SupportDataBucketRef', supportDataBucketName.valueAsString);
+    
+    supportDataBucket.addEventNotification(
+      s3.EventType.OBJECT_CREATED,
+      new s3n.LambdaDestination(OptiraMetadataFunction),
+      { prefix: 'support-cases/' }
+    );
   }
 }
