@@ -69,8 +69,8 @@ The [Optira AWS Support Collection - Data Pipeline](./support_collector/README.m
 Node.js React Web interface secured via Cognito. The architecture and deployment process is detailed in the [Optira Web Deployment](./optira-web/README.md) guide, located in the `optira-web` subdirectory. 
 
 ## Sample Output
-Sample output using WebAPI and Web Application.
-### A. Using WebAPI
+Sample output using REST API and Web Application.
+### A. Using REST API
 
 ![ALT](img/APISampleOutput.png)
 

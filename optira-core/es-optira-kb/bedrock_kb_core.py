@@ -16,7 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-PARSING_MODEL_ID="us.anthropic.claude-3-7-sonnet-20250219-v1:0"
+PARSING_MODEL_ID="global.anthropic.claude-sonnet-4-20250514-v1:0"
 EMBEDDING_MODEL_ID="amazon.titan-embed-text-v2:0"
 
 class OptiraKnowledgeBase:

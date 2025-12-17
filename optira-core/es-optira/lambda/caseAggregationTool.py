@@ -17,7 +17,7 @@ JSON_CONTENT_TYPE = {"Content-Type": "application/json"}
 def get_case_prompt(user_query: str) -> str:
     return (
     "You are an SQL expert familiar with AWS Athena. "
-    "Using the table 'case_metadata' (fields: account_id, caseId, timeCreated, severityCode, status, subject, "
+    "Using the database 'optira_database', which contains table 'case_metadata' (fields: account_id, caseId, timeCreated, severityCode, status, subject, "
     "categoryCode, serviceCode), generate an Athena SQL query matching the following natural language request: '"
     f"{user_query}'. Important rules: "
     "(1) Always use the SQL LIKE operator (not '=') with wildcards ('%') when filtering the field 'serviceCode'. "
@@ -27,7 +27,7 @@ def get_case_prompt(user_query: str) -> str:
     "(5) Severity is either of the following: high, low, normal, urgent, critical. "
     "(6) Always use LOWER() function when matching serviceCode to ensure case-insensitive comparison. "
     "(7) If there is mention of UTC then (otherwise ignore this rule): you can use from_iso8601_timestamp. "
-    "Keep it simple, dont use timezone function)"
+    "Keep it simple, dont use timezone function. DONT USE ANY MARKDOWN)"
 )
 
 """Create a standardized error response."""
